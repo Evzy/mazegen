@@ -25,7 +25,9 @@ boolean running;
 
 			initWalk(random.nextInt(maze.sizeR), random.nextInt(maze.sizeC), maze);
 				while (running){
-					hunt(maze, running);
+
+					hunt(maze);
+					System.out.println("STILL RUNNING");
 				}
 
 	} // end of generateMaze()
@@ -58,59 +60,59 @@ boolean running;
 		}
 	}
 
-	public void hunt(Maze maze, Boolean finished){
+	public void hunt(Maze maze){
 
 		boolean stop = false;
 			while (!stop){
 
-			System.out.print("THE HUNT IS ON");
-
 			List<Integer> randomDirectionHunt = Arrays.asList(maze.EAST, maze.NORTH, maze.WEST, maze.SOUTH);
 			Collections.shuffle(randomDirectionHunt);
-
-			System.out.println("testing location BOTTOM UP LEFT TO RIGHT");
 
 				for(int i = 0; i < maze.sizeR; i++){
 			          for(int j = 0; j < maze.sizeC; j++){
 									if (!visited.contains(maze.map[i][j])){
-										System.out.println("testing location" + i + " " + j);
 
 											if(visited.contains(maze.map[i][j].neigh[randomDirectionHunt.get(0)]) && !visited.contains(maze.map[i][j])){
-												System.out.println(i + " " + j + "RUNNING DIRECTION" + randomDirectionHunt.get(0));
 												maze.map[i][j].wall[randomDirectionHunt.get(0)].present = false;
 												initWalk(i,j,maze);
 												stop = true;
+												break;
 
 											}
 
 											if(visited.contains(maze.map[i][j].neigh[randomDirectionHunt.get(1)])&& !visited.contains(maze.map[i][j])){
-												System.out.println(i + " " + j + "RUNNING DIRECTION" + randomDirectionHunt.get(1));
 												maze.map[i][j].wall[randomDirectionHunt.get(1)].present = false;
 												initWalk(i,j,maze);
 												stop = true;
+												break;
 
 											}
 
 											if(visited.contains(maze.map[i][j].neigh[randomDirectionHunt.get(2)]) && !visited.contains(maze.map[i][j])){
-												System.out.println(i + " " + j + "RUNNING DIRECTION" + randomDirectionHunt.get(2));
 												maze.map[i][j].wall[randomDirectionHunt.get(2)].present = false;
 												initWalk(i,j,maze);
 												stop = true;
+												break;
 
 											}
 
 											if(visited.contains(maze.map[i][j].neigh[randomDirectionHunt.get(3)])&& !visited.contains(maze.map[i][j])){
-												System.out.println(i + " " + j + "RUNNING DIRECTION" + randomDirectionHunt.get(3));
 												maze.map[i][j].wall[randomDirectionHunt.get(3)].present = false;
 												initWalk(i,j,maze);
 												stop = true;
+												break;
 
 											}
 											//if it ends with every space visited
 									}
 			          }
+							if(stop)
+							break;
 			 }//if it ends with every space visited
+
+			 if(!stop)
 			 this.running = false;
+			 stop = true;
 		}
 	}
 } // end of class HuntAndKillGenerator
